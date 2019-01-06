@@ -1,21 +1,15 @@
 namespace :vandal do
   task :install do
+    cfg = YAML.load_file("#{Rails.root}/.graphiticfg.yml")
+    namespace = cfg['namespace']
+    schema_path = "#{namespace}/schema.json"
+
     source = File.join(File.dirname(__FILE__), 'static')
-    destination = "#{Rails.root}/public/api/v1"
+    destination = "#{Rails.root}/public/#{namespace}"
     FileUtils.rm_rf "#{destination}/vandal"
     FileUtils.mkdir_p destination
     FileUtils.copy_entry(source, "#{destination}/vandal")
 
-    # Document schema path and override
-    # Commit graphiti incorporating api namespace to schema path. Document the old.
-    # Maybe even do this in script?
-    #
-    # Vandal in isolation
-    # Remove demo path from vandal
-    # Ensure "open in new tab" works
-    # Ensure curl works
-    cfg = YAML.load_file("#{Rails.root}/.graphiticfg.yml")
-    schema_path = "#{cfg['namespace']}/schema.json"
     path = "#{destination}/vandal/index.html"
     lines = IO.readlines(path).map do |line|
       if line.include?('__SCHEMA_PATH__')
