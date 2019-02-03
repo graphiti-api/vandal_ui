@@ -2,7 +2,9 @@ namespace :vandal do
   task :install do
     cfg = YAML.load_file("#{Rails.root}/.graphiticfg.yml")
     namespace = cfg['namespace']
-    schema_path = "#{namespace}/schema.json"
+
+    vandal_path = VandalUi::Engine.routes.find_script_name({})
+    schema_path = "#{vandal_path}/schema.json"
 
     source = File.join(File.dirname(__FILE__), 'static')
     destination = "#{Rails.root}/public/#{namespace}"
