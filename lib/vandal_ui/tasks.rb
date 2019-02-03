@@ -1,5 +1,5 @@
 namespace :vandal do
-  task :install do
+  task install: [:environment] do
     cfg = YAML.load_file("#{Rails.root}/.graphiticfg.yml")
     namespace = cfg['namespace']
 
