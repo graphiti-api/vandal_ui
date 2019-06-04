@@ -1,6 +1,12 @@
 namespace :vandal do
   task install: [:environment] do
-    cfg = YAML.load_file("#{Rails.root}/.graphiticfg.yml")
+    graphiti_config_path = "#{Rails.root}/.graphiticfg.yml"
+    unless File.exist?(graphiti_config_path)
+      raise "Valid graphiti config file is required in the Rails root directory.\n" \
+            "More information: https://www.graphiti.dev/guides/getting-started/installation#graphiticfg"
+    end
+
+    cfg = YAML.load_file(graphiti_config_path)
     namespace = cfg['namespace']
 
     vandal_path = VandalUi::Engine.routes.find_script_name({})
