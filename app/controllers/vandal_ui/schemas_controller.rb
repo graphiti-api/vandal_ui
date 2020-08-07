@@ -1,4 +1,4 @@
-class VandalUi::SchemasController < ActionController::API
+class VandalUI::SchemasController < ActionController::API
   def show
     Rails.application.eager_load!
     Dir.glob("#{Rails.root}/app/resources/**/*.rb").each do |f|
