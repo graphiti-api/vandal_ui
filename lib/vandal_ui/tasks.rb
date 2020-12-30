@@ -31,6 +31,8 @@ namespace :vandal do
       file
     end
 
+    puts file
+
     File.open(path, 'w') do |f|
       f.puts file
     end
