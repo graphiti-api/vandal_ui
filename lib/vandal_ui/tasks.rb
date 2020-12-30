@@ -22,7 +22,13 @@ namespace :vandal do
     lines = IO.readlines(path).map do |line|
       if line.include?('__SCHEMA_PATH__')
         line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
-      elsif line.include?('__REMOTE_HOSTS__')
+      else
+        line
+      end
+    end
+
+    lines = IO.readlines(path).map do |line|
+      if line.include?('__REMOTE_HOSTS__')
         line.gsub('__REMOTE_HOSTS__', '${REMOTE_HOSTS}')
       else
         line
