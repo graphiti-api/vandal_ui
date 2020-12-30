@@ -22,8 +22,8 @@ namespace :vandal do
 
     path = "#{destination}/vandal/index.html"
     lines = IO.readlines(path).map do |line|
-      if line.include?('__SCHEMA_PATH__') || line.include?('__REMOTE_HOSTS__')
-        line.gsub('$REMOTE_HOSTS', ENV['REMOTE_HOSTS'])
+      if line.include?('__SCHEMA_PATH__') || line.include?('__HOSTS__')
+        line.gsub('__HOSTS__', ENV['REMOTE_HOSTS'])
         line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
       else
         line
