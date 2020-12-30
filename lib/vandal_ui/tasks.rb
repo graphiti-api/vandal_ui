@@ -23,7 +23,7 @@ namespace :vandal do
       if line.include?('__SCHEMA_PATH__')
         line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
       elsif line.include?('__REMOTE_HOSTS__')
-        line.gsub('__REMOTE_HOSTS__', ENV['REMOTE_HOSTS'])
+        line.gsub('__REMOTE_HOSTS__', '${REMOTE_HOSTS}')
       else
         line
       end
