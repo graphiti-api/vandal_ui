@@ -26,23 +26,22 @@ namespace :vandal do
         line
       end
     end
-    
-    lines
 
     File.open(path, 'w') do |file|
-      file.puts lines.
-    end
+      file.puts lines
+        .end
 
-    lines = IO.readlines(path).map do |line|
-      if line.include?('__REMOTE_HOSTS__')
-        line.gsub('__REMOTE_HOSTS__', ENV.fetch('__REMOTE_HOSTS__'))
-      else
-        line
+      lines = IO.readlines(path).map do |line|
+        if line.include?('__REMOTE_HOSTS__')
+          line.gsub('__REMOTE_HOSTS__', ENV.fetch('__REMOTE_HOSTS__'))
+        else
+          line
+        end
       end
-    end
-    
-    File.open(path, 'w') do |file|
-      file.puts lines.
+
+      File.open(path, 'w') do |file|
+        file.puts lines
+      end
     end
   end
 end
