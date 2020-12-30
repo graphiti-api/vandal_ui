@@ -35,7 +35,7 @@ namespace :vandal do
 
     lines = IO.readlines(path).map do |line|
       if line.include?('__REMOTE_HOSTS__')
-        line.gsub('__REMOTE_HOSTS__', ENV.fetch('__REMOTE_HOSTS__', hosts))
+        line.gsub('__REMOTE_HOSTS__', `"#{ENV.fetch('REMOTE_HOSTS')}"`, `"#{hosts}"`)
       else
         line
       end
