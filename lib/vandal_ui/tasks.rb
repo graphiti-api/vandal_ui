@@ -18,6 +18,8 @@ namespace :vandal do
     FileUtils.mkdir_p destination
     FileUtils.copy_entry(source, "#{destination}/vandal")
 
+    puts ENV['REMOTE_HOSTS']
+
     path = "#{destination}/vandal/index.html"
     lines = IO.readlines(path).map do |line|
       if line.include?('__SCHEMA_PATH__') || line.include?('__REMOTE_HOSTS__')
