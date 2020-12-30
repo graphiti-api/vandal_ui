@@ -3,7 +3,7 @@ namespace :vandal do
     graphiti_config_path = "#{Rails.root}/.graphiticfg.yml"
     unless File.exist?(graphiti_config_path)
       raise "Valid graphiti config file is required in the Rails root directory.\n" \
-            "More information: https://www.graphiti.dev/guides/getting-started/installation#graphiticfg"
+            'More information: https://www.graphiti.dev/guides/getting-started/installation#graphiticfg'
     end
 
     cfg = YAML.load_file(graphiti_config_path)
@@ -22,6 +22,8 @@ namespace :vandal do
     lines = IO.readlines(path).map do |line|
       if line.include?('__SCHEMA_PATH__')
         line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+      elsif line.include?('__REMOTE_HOSTS__')
+        line.gsub('__REMOTE_HOSTS__', ENV.fetch('REMOTE_HOSTS'))
       else
         line
       end
