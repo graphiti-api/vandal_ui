@@ -18,23 +18,31 @@ namespace :vandal do
     FileUtils.mkdir_p destination
     FileUtils.copy_entry(source, "#{destination}/vandal")
 
-    puts ENV['REMOTE_HOSTS']
-
     path = "#{destination}/vandal/index.html"
-    file = File.read(path)
-    if file.include?('__SCHEMA_PATH__') && file.include?('__REMOTE_HOSTS__')
-      file.gsub(/__REMOTE_HOSTS__/, ENV.fetch('REMOTE_HOSTS'))
-      file.gsub(/__SCHEMA_PATH__/, ENV.fetch('SCHEMA_PATH', schema_path))
-    elsif file.include?('__SCHEMA_PATH__')
-      file.gsub(/__SCHEMA_PATH__/, ENV.fetch('SCHEMA_PATH', schema_path))
-    else
-      file
+    lines = IO.readlines(path).map do |line|
+      if line.include?('__SCHEMA_PATH__')
+        line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+      else
+        line
+      end
+    end
+    
+    lines
+
+    File.open(path, 'w') do |file|
+      file.puts lines.
     end
 
-    puts file
-
-    File.open(path, 'w') do |f|
-      f.puts file
+    lines = IO.readlines(path).map do |line|
+      if line.include?('__REMOTE_HOSTS__')
+        line.gsub('__REMOTE_HOSTS__', ENV.fetch('__REMOTE_HOSTS__'))
+      else
+        line
+      end
+    end
+    
+    File.open(path, 'w') do |file|
+      file.puts lines.
     end
   end
 end
