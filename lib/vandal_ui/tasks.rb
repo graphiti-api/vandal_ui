@@ -21,19 +21,18 @@ namespace :vandal do
     puts ENV['REMOTE_HOSTS']
 
     path = "#{destination}/vandal/index.html"
-    lines = IO.readlines(path).map do |line|
-      if line.include?('__SCHEMA_PATH__') && line.include?('__REMOTE_HOSTS__')
-        line.gsub('__REMOTE_HOSTS__', ENV.fetch('REMOTE_HOSTS'))
-        line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
-      elsif line.include?('__SCHEMA_PATH__')
-        line.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
-      else
-        line
-      end
+    file = File.read(path)
+    if file.include?('__SCHEMA_PATH__') && line.include?('__REMOTE_HOSTS__')
+      file.gsub('__REMOTE_HOSTS__', ENV.fetch('REMOTE_HOSTS'))
+      file.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+    elsif file.include?('__SCHEMA_PATH__')
+      file.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+    else
+      file
     end
 
-    File.open(path, 'w') do |file|
-      file.puts lines
+    File.open(path, 'w') do |f|
+      f.puts file
     end
   end
 end
