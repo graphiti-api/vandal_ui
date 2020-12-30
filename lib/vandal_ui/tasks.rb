@@ -23,10 +23,10 @@ namespace :vandal do
     path = "#{destination}/vandal/index.html"
     file = File.read(path)
     if file.include?('__SCHEMA_PATH__') && file.include?('__REMOTE_HOSTS__')
-      file.gsub('__REMOTE_HOSTS__', ENV.fetch('REMOTE_HOSTS'))
-      file.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+      file.gsub(/__REMOTE_HOSTS__/, ENV.fetch('REMOTE_HOSTS'))
+      file.gsub(/__SCHEMA_PATH__/, ENV.fetch('SCHEMA_PATH', schema_path))
     elsif file.include?('__SCHEMA_PATH__')
-      file.gsub('__SCHEMA_PATH__', ENV.fetch('SCHEMA_PATH', schema_path))
+      file.gsub(/__SCHEMA_PATH__/, ENV.fetch('SCHEMA_PATH', schema_path))
     else
       file
     end
