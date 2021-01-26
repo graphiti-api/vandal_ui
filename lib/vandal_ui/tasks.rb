@@ -11,7 +11,6 @@ namespace :vandal do
     use_custom_header = cfg['useCustomHeader']
     use_remote_server = cfg['useRemoteServer']
 
-    puts cfg
     vandal_path = VandalUi::Engine.routes.find_script_name({})
     schema_path = "#{vandal_path}/schema.json"
 
