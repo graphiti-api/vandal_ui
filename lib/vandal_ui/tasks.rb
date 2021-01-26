@@ -42,7 +42,7 @@ namespace :vandal do
       end
     end
 
-    if use_remote_server
+    if use_remote_server == true
       lines = IO.readlines(path).map do |line|
         if line.include?('__USE_REMOTE_HOSTS__')
           line.gsub('__USE_REMOTE_HOSTS__', '"true"')
@@ -52,7 +52,7 @@ namespace :vandal do
       end
     end
 
-    if use_custom_header
+    if use_custom_header == true
       lines = IO.readlines(path).map do |line|
         if line.include?('__USE_CUSTOM_HEADER__')
           line.gsub('__USE_CUSTOM_HEADER__', '"true"')
