@@ -8,6 +8,8 @@ namespace :vandal do
 
     cfg = YAML.load_file(graphiti_config_path)
     namespace = cfg['namespace']
+    use_custom_header = cfg['useCustomHeader']
+    use_remote_server = cfg['useRemoteServer']
 
     vandal_path = VandalUi::Engine.routes.find_script_name({})
     schema_path = "#{vandal_path}/schema.json"
@@ -31,13 +33,31 @@ namespace :vandal do
       file.puts lines
     end
 
-    hosts = ENV['REMOTE_HOSTS']
-
     lines = IO.readlines(path).map do |line|
       if line.include?('__REMOTE_HOSTS__')
         line.gsub('__REMOTE_HOSTS__', "'" + ENV.fetch('REMOTE_HOSTS', {}) + "'")
       else
         line
+      end
+    end
+
+    if use_remote_server
+      lines = IO.readlines(path).map do |line|
+        if line.include?('__USE_REMOTE_HOSTS__')
+          line.gsub('__USE_REMOTE_HOSTS__', '"true"')
+        else
+          line
+        end
+      end
+    end
+
+    if use_custom_header
+      lines = IO.readlines(path).map do |line|
+        if line.include?('__USE_CUSTOM_HEADER__')
+          line.gsub('__USE_CUSTOM_HEADER__', '"true"')
+        else
+          line
+        end
       end
     end
 
