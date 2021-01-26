@@ -33,11 +33,10 @@ namespace :vandal do
       file.puts lines
     end
 
-    emptyHosts = "[]"
 
     lines = IO.readlines(path).map do |line|
       if line.include?('__REMOTE_HOSTS__')
-        line.gsub('__REMOTE_HOSTS__', "'" + ENV.fetch('REMOTE_HOSTS', emptyHosts) + "'")
+        line.gsub('__REMOTE_HOSTS__', "'" + ENV.fetch('REMOTE_HOSTS', "[]") + "'")
       else
         line
       end
