@@ -42,23 +42,16 @@ namespace :vandal do
       end
     end
 
-    if use_remote_server
-      lines = IO.readlines(path).map do |line|
-        if line.include?('__USE_REMOTE_HOSTS__')
-          line.gsub('__USE_REMOTE_HOSTS__', '"true"')
-        else
-          line
-        end
-      end
-    end
-
-    if use_custom_header
-      lines = IO.readlines(path).map do |line|
-        if line.include?('__USE_CUSTOM_HEADER__')
-          line.gsub('__USE_CUSTOM_HEADER__', '"true"')
-        else
-          line
-        end
+    lines = IO.readlines(path).map do |line|
+      if use_remote_server && use_custom_header
+        line.gsub('__USE_CUSTOM_HEADER__', '"true"')
+        line.gsub('__USE_REMOTE_HOSTS__', '"true"')
+      elsif use_remote_server
+        line.gsub('__USE_REMOTE_HOSTS__', '"true"')
+      elsif use_custom_header
+        line.gsub('__USE_CUSTOM_HEADER__', '"true"')
+      else
+        line
       end
     end
 
